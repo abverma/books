@@ -15,7 +15,7 @@ class Connection():
 
 	def __init__(self, host=HOST, port=PORT):
 		try:
-			logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
+			logging.basicConfig(stream=sys.stderr, level=logging.INFO)
 
 			self.client = MongoClient(host=HOST, port=PORT, username=USER, password=PWD, retryWrites=False, authSource=DB_NAME)
 

@@ -17,11 +17,11 @@ def search(name):
 	for book_node in root.iter('work'):
 		book = {}
 
-		book['goodread_id'] = book_node.find('id').text
 		book['ratings_count'] = book_node.find('ratings_count').text
 		book['average_rating'] = book_node.find('average_rating').text
 		best_book_node = book_node.find('best_book')
 		title_node = best_book_node.find('title')
+		book['goodread_id'] = best_book_node.find('id').text
 		book['title'] = title_node.text
 
 		author_node = best_book_node.find('author')

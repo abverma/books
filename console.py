@@ -12,8 +12,8 @@ meta_map = [{
 	'prompt': 'Enter book tile: '
 }, {
 	'key': 'read_date',
-	'required': True,
-	'default': current_date,
+	'required': False,
+	'default': None,
 	'prompt': 'Enter book date: '
 }, {
 	'key': 'author',
@@ -162,7 +162,7 @@ elif choice == '5':
 	if idx:
 		book = prompt(books[int(idx) - 1])	
 		book = prompt_for_list()
-		print(book)
+		print_result([book])
 		save_book(book, con)
 else:
 	print('Invalid choice')
