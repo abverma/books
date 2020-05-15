@@ -1,26 +1,29 @@
 from pymongo import MongoClient
 import logging
 import sys
+import config
 
 
-HOST = 'localhost'
-PORT = 27017
-DB_NAME = 'books'
+HOST = config.HOST
+PORT = config.PORT
+DB_NAME = config.DB_NAME
+USER = config.USER
+PWD = config.PWD
 
 
 class Connection():
 
 	def __init__(self, host=HOST, port=PORT):
 		try:
-			logging.basicConfig(stream=sys.stderr, level=logging.INFO)
+			logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
 
-			self.client = MongoClient(host='localhost', port=PORT)
+			self.client = MongoClient(host=HOST, port=PORT, username=USER, password=PWD, retryWrites=False, authSource=DB_NAME)
 
 			logging.debug('Connection successful!')
 		except Exception as e:
 			logging.debug('Error in connection')
 			logging.debug(e)
-			return Nomany
+			return None
 	def insert_book(self, books):
 		try:
 			db = self.client[DB_NAME]
@@ -68,6 +71,7 @@ class Connection():
 		except Exception as e:
 			logging.debug('Error in searching books')
 			logging.debug(e)
+			return None
 
 	def find_lists(self, books):
 		try:
@@ -78,6 +82,7 @@ class Connection():
 		except Exception as e:
 			logging.debug('Error in searching lists')
 			logging.debug(e)
+			return None
 
 	def close(self):
 		try:

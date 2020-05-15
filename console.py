@@ -137,7 +137,8 @@ if len(lists):
 else:
 	print('No list found')
 	create_list(con)
-
+	choice = input('Choose one of the following options\n1. Enter new book\n2. Enter new list\n3. Search book\n4. List last 10 books\n5. Seach book online.\n')
+	
 
 if choice == '1':
 	book = prompt({})	

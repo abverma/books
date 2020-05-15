@@ -3,12 +3,28 @@ from bson.objectid import ObjectId
 from datetime import date
 from db import Connection
 
+def find(arr, key, value):
+
+	for item in arr:
+		if item[key] == value:
+			return item
+
+lists = []
+con = Connection()
+lists_cusror = con.find_lists({})
+
+for list in lists_cusror:
+	lists.append(list)
 
 current_date = date.today().strftime('%Y-%m-%d')
-to_read_id = ObjectId("5eb6cbd0a6d5deed7094c000")
-read_id = ObjectId("5eb6f968edb00ecbc5297660")
-reading_id = ObjectId("5eb83bde88a3b005057598e0")
+to_read_id = find(lists, 'name', 'To Read')['_id']
+read_id = find(lists, 'name', 'Read')['_id']
+reading_id = find(lists, 'name', 'Currently Reading')['_id']
 books = []
+
+print(to_read_id)
+print(read_id)
+print(reading_id)
 
 with open('/Users/abhishek/Downloads/goodreads_library_export.csv', newline='') as csvfile:
 	reader = csv.DictReader(csvfile)
