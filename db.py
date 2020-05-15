@@ -55,7 +55,7 @@ class Connection():
 		try:
 			logging.debug(books)
 			db = self.client[DB_NAME]
-			result = db.books.aggregate([{
+			pipelines = [{
 				'$match': books
 			},{
 				'$lookup': {
@@ -66,7 +66,8 @@ class Connection():
 			    }
 			}, {
 				'$limit': 10
-			}])
+			}]
+			result = db.books.aggregate(pipelines)
 			return result
 		except Exception as e:
 			logging.debug('Error in searching books')

@@ -66,11 +66,9 @@ def prompt_for_list():
 
 def save_book(book, con):
 	con.insert_book(book)
-	con.close()
 
 def save_list(list, con):
 	con.insert_list(list)
-	con.close()
 
 def create_list(con):
 	choice = input('Enter new list name: ')
@@ -82,7 +80,7 @@ def create_list(con):
 def print_result(result):
 	result_str = ''
 	idx = 0
-	# breakpoint()
+	
 	for rec in result:
 		idx += 1
 		result_str += str(idx) + '. '
@@ -94,10 +92,10 @@ def print_result(result):
 				result_str += key.title().replace('_', ' ') + ': ' + rec[key] + '\n'
 
 		result_str +=  '\n'
-		
-	if not len(result_str):
-		result_str = 'No records found'
 
+	if not len(result_str):
+		result_str = 'No records found'			
+		
 	print('\n')
 	print('-'*20)
 	print('Result')
@@ -107,7 +105,6 @@ def print_result(result):
 def search_books(book, con):
 	result = con.find_books(book)
 	print_result(result)
-	con.close()
 
 
 def search_prompt():
@@ -124,7 +121,7 @@ def get_lists(con):
 
 clear()
 con = Connection()
-
+print('Fetching reading lists...')
 lists_cusror = get_lists(con)
 
 for list in lists_cusror:
@@ -138,7 +135,7 @@ else:
 	print('No list found')
 	create_list(con)
 	choice = input('Choose one of the following options\n1. Enter new book\n2. Enter new list\n3. Search book\n4. List last 10 books\n5. Seach book online.\n')
-	
+
 
 if choice == '1':
 	book = prompt({})	
@@ -149,8 +146,8 @@ elif choice == '2':
 	clear()
 	create_list(con)
 elif choice == '3':
-	query = search_prompt()
 	clear()
+	query = search_prompt()
 	if query:
 		search_books(query, con)
 elif choice == '4':

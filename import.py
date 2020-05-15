@@ -34,6 +34,8 @@ with open('/Users/abhishek/Downloads/goodreads_library_export.csv', newline='') 
 		book['author'] = row['Author']
 		book['isbn'] = row['ISBN'].replace('=', '').replace('"', '')
 		book['creation_date'] = current_date
+		book['goodread_id'] = row['Book Id']
+		book['average_rating'] = row['Average Rating']
 		shelve = row['Exclusive Shelf']
 		list_id = None
 		if shelve == 'currently-reading':
