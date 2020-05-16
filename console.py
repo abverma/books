@@ -1,4 +1,5 @@
 from datetime import date
+from datetime import datetime
 from pymongo import MongoClient
 from db import Connection
 import searchBooks
@@ -85,11 +86,17 @@ def print_result(result):
 		idx += 1
 		result_str += str(idx) + '. '
 
+
 		for key in rec.keys():
-			if key == 'lists':
-				result_str  += key.title().replace('_', ' ') + ': ' + rec['lists'][0]['name'] + '\n'
-			elif key != '_id' and key != 'list_id':
-				result_str += key.title().replace('_', ' ') + ': ' + rec[key] + '\n'
+			if key not in ['_id','list_id', 'creation_date']:
+				if key == 'lists':
+					result_str  += key.title().replace('_', ' ') + ': ' + rec['lists'][0]['name'] + '\n'
+				elif type(rec[key]) is datetime:
+					result_str += key.title().replace('_', ' ') + ': ' + rec[key].strftime('%a %-d %b,  %Y') + '\n'
+				elif 'date' in key and type(rec[key]) is str :
+					result_str += key.title().replace('_', ' ') + ': ' + datetime.strptime(rec[key], '%Y-%m-%d').strftime('%a %-d %b,  %Y') + '\n'
+				else:
+					result_str += key.title().replace('_', ' ') + ': ' + rec[key] + '\n'
 
 		result_str +=  '\n'
 
