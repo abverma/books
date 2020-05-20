@@ -33,6 +33,17 @@ class Connection():
 			logging.debug('Error in inserting books')
 			logging.debug(e)
 
+	def update_book(self, search, update):
+		try:
+			db = self.client[DB_NAME]
+			db.books.update_one(search, {
+				'$set': update
+			})
+			logging.debug('Books inserted!')	
+		except Exception as e:
+			logging.debug('Error in inserting books')
+			logging.debug(e)
+
 	def insert_goodreads_books(self, books):
 		try:
 			db = self.client[DB_NAME]
@@ -57,14 +68,22 @@ class Connection():
 			db = self.client[DB_NAME]
 			pipelines = [{
 				'$match': books
-			},{
-				'$lookup': {
-			        'from': 'lists',
-			        'localField': 'list_id',
-			        'foreignField': '_id',
-			        'as': 'lists'
-			    }
-			}, {
+			},
+			# {
+			# 	'$lookup': {
+			#         'from': 'lists',
+			#         'localField': 'list_id',
+			#         'foreignField': '_id',
+			#         'as': 'lists'
+			#     }
+			# },
+			{
+				'$sort': {
+					'creation_date': -1,
+					'last_update_date': -1
+				}
+			}, 
+			{
 				'$limit': 10
 			}]
 			result = db.books.aggregate(pipelines)

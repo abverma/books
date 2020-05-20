@@ -17,9 +17,9 @@ for list in lists_cusror:
 	lists.append(list)
 
 current_date = date.today().strftime('%Y-%m-%d')
-to_read_id = find(lists, 'name', 'To Read')['_id']
-read_id = find(lists, 'name', 'Read')['_id']
-reading_id = find(lists, 'name', 'Currently Reading')['_id']
+to_read = find(lists, 'name', 'To Read')['name']
+read = find(lists, 'name', 'Read')['name']
+reading = find(lists, 'name', 'Currently Reading')['name']
 books = []
 
 print(to_read_id)
@@ -39,13 +39,12 @@ with open('/Users/abhishek/Downloads/goodreads_library_export.csv', newline='') 
 		shelve = row['Exclusive Shelf']
 		list_id = None
 		if shelve == 'currently-reading':
-			list_id = reading_id
+			book['list'] = reading
 		elif shelve == 'read':
-			list_id = read_id
+			book['list'] = read_id
 		elif shelve == 'to-read':
-			list_id = to_read_id
+			book['list'] = to_read
 
-		book['list_id'] = list_id
 
 		books.append(book)
 

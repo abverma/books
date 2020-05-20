@@ -7,7 +7,7 @@ def search(name):
 	KEY = config.KEY
 	URL = 'https://www.goodreads.com/search/index.xml?key=' + KEY + '&q=' + name
 
-	print(URL)
+	# print(URL)
 	print('Searching...')
 	r = req.get(URL)
 	root = ET.fromstring(r.text)
