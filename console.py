@@ -30,7 +30,7 @@ meta_map = [{
 	'default': None,
 	'prompt': 'Enter ISBN: '
 }]
-main_menu = 'Choose one of the following options\n1. Enter new book\n2. Enter new list\n3. Search book\n4. List last 10 books\n5. Seach book online.\n6. Exit\n'
+main_menu = 'Choose one of the following options\n1. Enter new book\n2. Enter new list\n3. Search book\n4. List last 5 books\n5. Seach book online.\n6. Exit\n'
 lists = []
 
 def clear():
@@ -120,42 +120,47 @@ def print_result(result):
 
 	return book_list
 
-def search_books(search, con):
-	result = con.find_books(search)
+def search_books(search, con, start = 0):
+	result = con.find_books(search, start)
 	books = print_result(result)
 
 	if len(books):
-		idx = input('Enter book# to take an action: ')
-		if idx:
-			try: 
-				book = books[int(idx) - 1]
-				updated_book = None
-				choice = input('Choose one of the following options\n1. Edit list\n2. Add list date\n')
+		nxt = input('Press n to list next 5 books: ')
 
-				if choice == '1':
-					updated_book = prompt_for_list({})
-					updated_book['last_update_date'] = current_date
-					updated_book['list_update_date'] = current_date
+		if nxt == 'n':
+			search_books(search, con, start + 5)
+		else: 
+			idx = input('Enter book# to take an action: ')
+			if idx:
+				try: 
+					book = books[int(idx) - 1]
+					updated_book = None
+					choice = input('Choose one of the following options\n1. Edit list\n2. Add list date\n')
 
-					
-				elif choice == '2':
-					input_date = input('Enter date (yyyy-mm-dd): ')
-					if input_date:
-						update_date = datetime.strptime(input_date, '%Y-%m-%d')
-						updated_book = {
-							'last_update_date': update_date,
-							'list_update_date': update_date
-						}
+					if choice == '1':
+						updated_book = prompt_for_list({})
+						updated_book['last_update_date'] = current_date
+						updated_book['list_update_date'] = current_date
 
-				if updated_book:		
-					update_book({
-						'_id': book['_id']
-					}, 
-					updated_book, 
-					con)
-					print('Book updated')
-			except Exception as e:
-				print('Invalid choice')
+						
+					elif choice == '2':
+						input_date = input('Enter date (yyyy-mm-dd): ')
+						if input_date:
+							update_date = datetime.strptime(input_date, '%Y-%m-%d')
+							updated_book = {
+								'last_update_date': update_date,
+								'list_update_date': update_date
+							}
+
+					if updated_book:		
+						update_book({
+							'_id': book['_id']
+						}, 
+						updated_book, 
+						con)
+						print('Book updated')
+				except Exception as e:
+					print('Invalid choice')
 	else: 
 		input('Press any key to continue: ')
 

@@ -62,7 +62,7 @@ class Connection():
 			logging.debug('Error in inserting list')
 			logging.debug(e)		
 
-	def find_books(self, books):
+	def find_books(self, books, start = 0):
 		try:
 			logging.debug(books)
 			db = self.client[DB_NAME]
@@ -83,8 +83,12 @@ class Connection():
 					'last_update_date': -1
 				}
 			}, 
+			{	
+				'$skip': start
+			},
+			
 			{
-				'$limit': 10
+				'$limit': 5
 			}]
 			result = db.books.aggregate(pipelines)
 			return result
