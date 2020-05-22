@@ -5,6 +5,7 @@ from db import Connection
 from subprocess import call
 import searchBooks
 import sys
+import emoji
 
 
 current_date = datetime.utcnow()
@@ -30,7 +31,7 @@ meta_map = [{
 	'default': None,
 	'prompt': 'Enter ISBN: '
 }]
-main_menu = 'Choose one of the following options\n1. Enter new book\n2. Enter new list\n3. Search book\n4. List last 5 books\n5. Seach book online.\n6. Exit\n'
+main_menu = 'Choose one of the following options\n1. Enter new book\n2. Enter new list\n3. Search book\n4. List last 5 books\n5. Seach book online\n6. Exit\n'
 lists = []
 
 def clear():
@@ -110,7 +111,7 @@ def print_result(result):
 		result_str +=  '\n'
 
 	if not len(result_str):
-		result_str = 'No books found'			
+		result_str = emoji.emojize('No books found :face_with_raised_eyebrow:')		
 		
 	print('\n')
 	print('-'*20)
@@ -214,7 +215,7 @@ def handle_choice(choice):
 				input('Press any key to continue: ')
 
 	elif choice == '6':
-		print('Bye!')
+		print(emoji.emojize('Bye! :waving_hand:'))
 		con.close()
 		sys.exit()
 	else:
@@ -230,17 +231,16 @@ con = Connection()
 print('#'*40)
 print('#' + ' '*15 +'LIBRARY' + ' '*16 + '#')
 print('#'*40)
-print('Fetching reading lists...')
+print(emoji.emojize('Fetching reading lists... :hourglass_not_done:'))
 lists_cusror = get_lists(con)
 
 for list in lists_cusror:
 	lists.append(list)
 
 if len(lists):
-	print('Fetched reading lists')
 	choice = input(main_menu)
 else:
-	print('No list found')
+	print(emoji.emojize('No list found :face with raised eyebrow:'))
 	create_list(con)
 	choice = input(main_menu)
 

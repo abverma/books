@@ -1,6 +1,7 @@
 import requests as req
 import xml.etree.ElementTree as ET
 import config
+import emoji
 
 def search(name):
 
@@ -8,7 +9,7 @@ def search(name):
 	URL = 'https://www.goodreads.com/search/index.xml?key=' + KEY + '&q=' + name
 
 	# print(URL)
-	print('Searching...')
+	print(emoji.emojize('Searching... :hourglass_not_done:'))
 	r = req.get(URL)
 	root = ET.fromstring(r.text)
 
