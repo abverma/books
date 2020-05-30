@@ -72,8 +72,8 @@ class Connection():
 			},
 			{
 				'$sort': {
-					'creation_date': -1,
-					'last_update_date': -1
+					'last_update_date': -1,
+					'creation_date': -1
 				}
 			}, 
 			{	
