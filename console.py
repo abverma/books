@@ -98,7 +98,7 @@ def print_result(result):
 
 
 		for key in rec.keys():
-			if key not in ['_id','list_id', 'creation_date', 'last_update_date']:
+			if key not in ['_id','list_id', 'creation_date', 'last_update_date', 'user_id']:
 				if key == 'lists':
 					result_str  += key.title().replace('_', ' ') + ': ' + rec['lists'][0]['name'] + '\n'
 				elif type(rec[key]) is datetime:
